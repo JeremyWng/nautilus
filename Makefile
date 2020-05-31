@@ -413,6 +413,13 @@ CFLAGS:=   $(COMMON_FLAGS) \
 #                   -Wpedantic \
 #
 
+
+######################################################################
+CXXFLAGS += -fsanitize=address
+CFLGAS += -fsanitize=address
+######################################################################
+
+
 # if we're using Clang, we can't use these
 ifdef NAUT_CONFIG_USE_GCC
 CFLAGS += -std=gnu99 \
