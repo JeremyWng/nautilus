@@ -1,5 +1,6 @@
-CFLAGS = -fno-omit-frame-pointer -ffreestanding -fno-stack-protector -fno-strict-aliasing -fno-strict-overflow -mno-red-zone -mcmodel=large -O2  -fno-delete-null-pointer-checks -no-pie -fno-pic -fno-PIC -fno-PIE -fno-exceptions -fno-rtti  -D__NAUTILUS__ -Iinclude  -include include/autoconf.h -D__NAUTILUS__ 
-CXXFLAGS = -fno-omit-frame-pointer -ffreestanding -fno-stack-protector -fno-strict-aliasing -fno-strict-overflow -mno-red-zone -mcmodel=large -O2  -fno-delete-null-pointer-checks -no-pie -fno-pic -fno-PIC -fno-PIE -fno-exceptions -fno-rtti  -D__NAUTILUS__ -Iinclude  -include include/autoconf.h -D__NAUTILUS__ 
+CFLAGS := $(filter-out -fsanitize=address, $(CFLAGS))
+CXXFLAGS := $(filter-out -fsanitize=address, $(CXXFLAGS))
+
 
 obj-y += asan_utils.o \
 	asan_allocator.o \

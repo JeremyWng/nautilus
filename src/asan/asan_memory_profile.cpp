@@ -16,7 +16,7 @@
 #include "sanitizer_common/sanitizer_stacktrace.h"
 #include "sanitizer_common/sanitizer_stoptheworld.h"
 #include "lsan/lsan_common.h"
-#include "asan/asan_allocator.h"
+#include "asan_allocator.h"
 
 #if CAN_SANITIZE_LEAKS
 
