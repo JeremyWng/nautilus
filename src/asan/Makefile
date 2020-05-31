@@ -2,8 +2,7 @@ CFLAGS := $(filter-out -fsanitize=address, $(CFLAGS))
 CXXFLAGS := $(filter-out -fsanitize=address, $(CXXFLAGS))
 
 
-obj-y += asan_utils.o \
-	asan_allocator.o \
+obj-y += asan_allocator.o \
 	asan_activation.o \
 	asan_debugging.o \
 	asan_descriptions.o \
