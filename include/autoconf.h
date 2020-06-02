@@ -1,7 +1,7 @@
 /*
  * Automatically generated C config: don't edit
  * Nautilus version: 
- * Sat May 30 21:18:27 2020
+ * Tue Jun  2 10:45:47 2020
  */
 #define AUTOCONF_INCLUDED
 

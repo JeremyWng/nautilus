@@ -9,6 +9,7 @@ obj-y += \
         net/ \
 	acpi/ \
 	test/ \
+	sanitizer_common/ \
 	asan/
 
 obj-$(NAUT_CONFIG_CXX_SUPPORT) += cxx/
