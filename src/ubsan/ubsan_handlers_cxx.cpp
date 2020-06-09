@@ -95,67 +95,67 @@ void __ubsan::__ubsan_handle_dynamic_type_cache_miss_abort(
 }
 
 namespace __ubsan {
-void __ubsan_handle_cfi_bad_type(CFICheckFailData *Data, ValueHandle Vtable,
-                                 bool ValidVtable, ReportOptions Opts) {
-  SourceLocation Loc = Data->Loc.acquire();
-  ErrorType ET = ErrorType::CFIBadType;
+// void __ubsan_handle_cfi_bad_type(CFICheckFailData *Data, ValueHandle Vtable,
+//                                  bool ValidVtable, ReportOptions Opts) {
+//   SourceLocation Loc = Data->Loc.acquire();
+//   ErrorType ET = ErrorType::CFIBadType;
 
-  if (ignoreReport(Loc, Opts, ET))
-    return;
+//   if (ignoreReport(Loc, Opts, ET))
+//     return;
 
-  ScopedReport R(Opts, Loc, ET);
-  DynamicTypeInfo DTI = ValidVtable
-                            ? getDynamicTypeInfoFromVtable((void *)Vtable)
-                            : DynamicTypeInfo(0, 0, 0);
+//   ScopedReport R(Opts, Loc, ET);
+//   DynamicTypeInfo DTI = ValidVtable
+//                             ? getDynamicTypeInfoFromVtable((void *)Vtable)
+//                             : DynamicTypeInfo(0, 0, 0);
 
-  const char *CheckKindStr;
-  switch (Data->CheckKind) {
-  case CFITCK_VCall:
-    CheckKindStr = "virtual call";
-    break;
-  case CFITCK_NVCall:
-    CheckKindStr = "non-virtual call";
-    break;
-  case CFITCK_DerivedCast:
-    CheckKindStr = "base-to-derived cast";
-    break;
-  case CFITCK_UnrelatedCast:
-    CheckKindStr = "cast to unrelated type";
-    break;
-  case CFITCK_VMFCall:
-    CheckKindStr = "virtual pointer to member function call";
-    break;
-  case CFITCK_ICall:
-  case CFITCK_NVMFCall:
-    Die();
-  }
+//   const char *CheckKindStr;
+//   switch (Data->CheckKind) {
+//   case CFITCK_VCall:
+//     CheckKindStr = "virtual call";
+//     break;
+//   case CFITCK_NVCall:
+//     CheckKindStr = "non-virtual call";
+//     break;
+//   case CFITCK_DerivedCast:
+//     CheckKindStr = "base-to-derived cast";
+//     break;
+//   case CFITCK_UnrelatedCast:
+//     CheckKindStr = "cast to unrelated type";
+//     break;
+//   case CFITCK_VMFCall:
+//     CheckKindStr = "virtual pointer to member function call";
+//     break;
+//   case CFITCK_ICall:
+//   case CFITCK_NVMFCall:
+//     Die();
+//   }
 
-  Diag(Loc, DL_Error, ET,
-       "control flow integrity check for type %0 failed during "
-       "%1 (vtable address %2)")
-      << Data->Type << CheckKindStr << (void *)Vtable;
+//   Diag(Loc, DL_Error, ET,
+//        "control flow integrity check for type %0 failed during "
+//        "%1 (vtable address %2)")
+//       << Data->Type << CheckKindStr << (void *)Vtable;
 
-  // If possible, say what type it actually points to.
-  if (!DTI.isValid())
-    Diag(Vtable, DL_Note, ET, "invalid vtable");
-  else
-    Diag(Vtable, DL_Note, ET, "vtable is of type %0")
-        << TypeName(DTI.getMostDerivedTypeName());
+//   // If possible, say what type it actually points to.
+//   if (!DTI.isValid())
+//     Diag(Vtable, DL_Note, ET, "invalid vtable");
+//   else
+//     Diag(Vtable, DL_Note, ET, "vtable is of type %0")
+//         << TypeName(DTI.getMostDerivedTypeName());
 
-  // If the failure involved different DSOs for the check location and vtable,
-  // report the DSO names.
-  const char *DstModule = Symbolizer::GetOrInit()->GetModuleNameForPc(Vtable);
-  if (!DstModule)
-    DstModule = "(unknown)";
+//   // If the failure involved different DSOs for the check location and vtable,
+//   // report the DSO names.
+//   const char *DstModule = Symbolizer::GetOrInit()->GetModuleNameForPc(Vtable);
+//   if (!DstModule)
+//     DstModule = "(unknown)";
 
-  const char *SrcModule = Symbolizer::GetOrInit()->GetModuleNameForPc(Opts.pc);
-  if (!SrcModule)
-    SrcModule = "(unknown)";
+//   const char *SrcModule = Symbolizer::GetOrInit()->GetModuleNameForPc(Opts.pc);
+//   if (!SrcModule)
+//     SrcModule = "(unknown)";
 
-  if (internal_strcmp(SrcModule, DstModule))
-    Diag(Loc, DL_Note, ET, "check failed in %0, vtable located in %1")
-        << SrcModule << DstModule;
-}
+//   if (internal_strcmp(SrcModule, DstModule))
+//     Diag(Loc, DL_Note, ET, "check failed in %0, vtable located in %1")
+//         << SrcModule << DstModule;
+// }
 
 static bool handleFunctionTypeMismatch(FunctionTypeMismatchData *Data,
                                        ValueHandle Function,
